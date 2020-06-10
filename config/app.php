@@ -229,4 +229,8 @@ return [
 
     ],
 
+    'password_grant' => [
+        'client' => env('CLIENT_ID',2),
+        'secret' => env('CLIENT_SECRET', 'gIQqZ445QIZoPxXegZxZpphHD8IFPuConyChEkNz')
+    ]
 ];
