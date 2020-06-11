@@ -10,8 +10,6 @@ class Order extends Model
 
     protected $casts = ['arrives_at' => 'datetime'];
 
-    protected $with = ['movie'];
-
     public function movie()
     {
         return $this->belongsTo(Movie::class);

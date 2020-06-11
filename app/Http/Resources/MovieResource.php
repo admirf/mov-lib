@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MovieResource extends JsonResource
@@ -14,18 +15,8 @@ class MovieResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        /*$table->string('title');
-        $table->string('cover_url');
-        $table->unsignedBigInteger('gross')->nullable();
-        $table->unsignedBigInteger('budget')->nullable();
-        $table->string('release_date')->nullable();
-        $table->string('mpaa_rating')->nullable();
-        $table->string('distributor')->nullable();
-        $table->string('genre')->nullable();
-        $table->string('director')->nullable();
-        $table->integer('rotten_tomatoes_rating')->nullable();
-        $table->float('imdb_rating')->nullable();*/
+        /** @var User $auth */
+        $auth = auth()->user();
 
         return [
             'type' => 'movie',
@@ -40,7 +31,16 @@ class MovieResource extends JsonResource
             'genre' => $this->genre,
             'director' => $this->director,
             'rottenTomatoesRating' => $this->rotten_tomatoes_rating,
-            'imdbRating' => $this->imdb_rating
+            'imdbRating' => $this->imdb_rating,
+            'favorite' => $this->when((bool) $auth, function () use ($auth) {
+                return $auth->favoriteMovies()->where('movie_id', $this->resource->id)->exists();
+            }),
+            'order' => $this->when((bool) $auth, function () use ($auth) {
+                $order = $auth->orders()->where('movie_id', $this->resource->id)->select('id')->first();
+                return $order ? [
+                    'id' => $order->id
+                ]: null;
+            })
         ];
     }
 }

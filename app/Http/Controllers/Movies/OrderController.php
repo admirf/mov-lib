@@ -20,13 +20,26 @@ class OrderController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        return OrderResource::collection($user->orders()->paginate());
+        return OrderResource::collection($user->orders()->with('movie')->paginate());
     }
 
     public function order(Movie $movie)
     {
         /** @var User $user */
         $user = auth()->user();
+
+        if ($order = $user->orders()->where('movie_id', $movie->id)->select('id')->first()) {
+            return response()
+                ->json([
+                    'error' => [
+                        'message' => 'You already ordered this movie.',
+                        'order' => [
+                            'id' => $order->id
+                        ]
+                    ]
+                ])
+                ->setStatusCode(400);
+        }
 
         $statuses = ['waiting', 'shipped'];
         $months = rand(1, 12);
