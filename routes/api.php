@@ -30,4 +30,7 @@ Route::namespace('Movies')->group(function () {
     Route::get('/favorites', 'FavoriteController@index');
     Route::post('/favorites/{movie}', 'FavoriteController@add');
     Route::delete('/favorites/{movie}', 'FavoriteController@remove');
+
+    Route::get('/orders', 'OrderController@index');
+    Route::post('/movies/{movie}/order', 'OrderController@order');
 });

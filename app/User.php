@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Movie::class, 'favorites');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
