@@ -14,7 +14,9 @@ class MovieSeeder extends Seeder
         $file = file_get_contents(database_path('json/movies.json'));
         $json = collect(json_decode($file, true));
 
-        $json->each(function ($item) {
+        $genres = [];
+
+        $json->each(function ($item) use (&$genres) {
             if (! is_null($item['Title'])) {
                 App\Movie::create([
                     'title' => $item['Title'],
@@ -29,7 +31,17 @@ class MovieSeeder extends Seeder
                     'rotten_tomatoes_rating' => $item['Rotten_Tomatoes_Rating'],
                     'imdb_rating' => $item['IMDB_Rating']
                 ]);
+
+                if (! is_null($item['Major_Genre']) && ! in_array($item['Major_Genre'], $genres)) {
+                    array_push($genres, $item['Major_Genre']);
+                }
             }
         });
+
+        foreach ($genres as $genre) {
+            App\Genre::create([
+                'name' => $genre
+            ]);
+        }
     }
 }

@@ -18,3 +18,16 @@ Route::namespace('Account')->group(function () {
     Route::post('/register', 'RegistrationController');
     Route::get('/me', 'MeController');
 });
+
+Route::namespace('Genres')->group(function () {
+    Route::get('/genres', 'GenreController');
+});
+
+Route::namespace('Movies')->group(function () {
+    Route::get('/movies', 'MovieController@index');
+    Route::get('/movies/{movie}', 'MovieController@show');
+
+    Route::get('/favorites', 'FavoriteController@index');
+    Route::post('/favorites/{movie}', 'FavoriteController@add');
+    Route::delete('/favorites/{movie}', 'FavoriteController@remove');
+});
