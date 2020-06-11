@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SetPassportTokens::class);
 
         $this->call(UserSeeder::class);
+        $this->call(MovieSeeder::class);
     }
 }
