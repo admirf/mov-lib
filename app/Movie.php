@@ -18,4 +18,9 @@ class Movie extends Model
         'rotten_tomatoes_rating',
         'imdb_rating'
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

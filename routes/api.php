@@ -33,4 +33,8 @@ Route::namespace('Movies')->group(function () {
 
     Route::get('/orders', 'OrderController@index');
     Route::post('/movies/{movie}/order', 'OrderController@order');
+
+    Route::get('/movies/{movie}/reviews', 'ReviewController@index');
+    Route::post('/movies/{movie}/reviews', 'ReviewController@store');
+    Route::delete('/reviews/{review}', 'ReviewController@destroy');
 });
