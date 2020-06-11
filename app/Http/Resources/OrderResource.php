@@ -18,6 +18,7 @@ class OrderResource extends JsonResource
             'type' => 'order',
             'id' => $this->id,
             'charge' => $this->charge,
+            'status' => $this->status,
             'requestedAt' => $this->created_at,
             'statusUpdatedAt' => $this->updated_at,
             'estimatedArrivalTime' => $this->arrives_at,
