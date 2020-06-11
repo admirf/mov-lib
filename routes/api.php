@@ -24,6 +24,8 @@ Route::namespace('Genres')->group(function () {
 });
 
 Route::namespace('Movies')->group(function () {
+    Route::get('/movies/search', 'SearchController');
+
     Route::get('/movies', 'MovieController@index');
     Route::get('/movies/{movie}', 'MovieController@show');
 
